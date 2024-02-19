@@ -1,0 +1,54 @@
+<%#
+<form action="/users" method="post" accept-charset="UTF-8">
+    <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token %>">
+    <%#label for="uname">User Name</label>
+    <input type="text" id="uname" name="user[username]"><br>
+    <label for="email">Email :</label>
+    <input type="email" id="email" name="user[email]"><br>
+    <label for="password">Password</label>
+    <input type="password" id="text" name="user[password]"><br>
+    <button type="submit">Submit</button>
+</form%>
+
+<%form_tag('/users', method:'post') do %>
+    <%= label_tag("Username")%>
+    <%= text_field_tag('user[username]')%>
+    <br>
+    <%=label_tag('Email:')%>
+    <%=text_field_tag('user[email]')%>
+    <br>
+    <%= label_tag('Password')%>
+    <%=text_field_tag('user[password]')%>
+    <br>
+    <%=submit_tag('Submit')%>
+<%end%>
+
+<%if @user.errors.any?%>
+    <div id="error-explanation">
+        <h2>
+            <%= pluralize(@user.errors.count,'count')%>Prohibiting the the user to create
+        </h2>
+        <ul><% @user.errors.each do |error|%>
+            <li>
+                <%=error.full_message%>%
+            </li>
+            <%end%>
+        </ul>
+
+    </div>
+<%end%>
+
+<%= form_with model: @user do |form|%>
+    <%= form.label 'Username :'%>
+    <%= form.text_field :username%>
+    <br>
+    <%= form.label 'Email'%>
+    <%= form.email_field :email%>
+    <br>
+    <%= form.label 'Password'%>
+    <%= form.password_field :password%>
+    <br>
+    <%= form.submit 'Submit'%>
+<%end%>
+
+
